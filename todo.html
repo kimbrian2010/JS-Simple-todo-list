@@ -19,19 +19,33 @@
     <script>
         //BEGIN OF MVC
         //MODEL SECTION -----------------------------------------------
-        let todos = [{
-            title: 'Get groceries',
-            dueDate: '12/30/2022',
-            id: 'id1'
-        }, {
-            title: 'Wash car',
-            dueDate: '5/01/2023',
-            id: 'id2'
-        }, {
-            title: 'Write a book',
-            dueDate: '1/03/2023',
-            id: 'id3'
-        }];
+
+        // check if localStorage has todo array
+        let todos;
+
+        //RetrievevlocalStorage
+        const savedTodos = JSON.parse(localStorage.getItem('todos'));
+        //Check if it is an array
+        if (Array.isArray(savedTodos)) {
+            todos = savedTodos;
+        } else {
+            todos = [{
+                title: 'Get groceries',
+                dueDate: '12/30/2022',
+                id: 'id1'
+            }, {
+                title: 'Wash car',
+                dueDate: '5/01/2023',
+                id: 'id2'
+            }, {
+                title: 'Write a book',
+                dueDate: '1/03/2023',
+                id: 'id3'
+            }];
+
+        }
+
+
         //todos.push('Some more');
 
         //Create a todo
@@ -43,6 +57,8 @@
                 dueDate: dueDate,
                 id: id
             });
+
+            saveTodos();
         }
         //Delete a todo
         function remeoveTodo(idToDelete) {
@@ -54,6 +70,13 @@
                 }
             });
 
+            saveTodos();
+
+        }
+
+        // Save a todo
+        function saveTodos() {
+            localStorage.setItem('todos', JSON.stringify(todos)); //Covert an array into a String
         }
 
         render();
